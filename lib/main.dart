@@ -1,6 +1,7 @@
 import 'package:client_realm_builder/Screens/game_details_screen.dart';
 import 'package:client_realm_builder/Screens/new_game.dart';
 import 'package:client_realm_builder/Screens/home_screen.dart';
+import 'package:client_realm_builder/provider/characters_provider.dart';
 import 'package:client_realm_builder/provider/games_provider.dart';
 import 'package:client_realm_builder/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<GamesProvider>(
           create: (ctx) => GamesProvider()
+        ),
+        ChangeNotifierProvider<CharactersProvider>(
+          create: (ctx) => CharactersProvider()
         )
       ],
       child: MaterialApp(

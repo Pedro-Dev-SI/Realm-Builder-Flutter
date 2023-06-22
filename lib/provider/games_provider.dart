@@ -6,9 +6,19 @@ import '../models/game.dart';
 class GamesProvider with ChangeNotifier {
   List<Game> games = [];
 
+  dynamic gameDetailed;
+
   void addGame(Game game) async {
     Game gameAdded = await GameService.addGame(game);
     games.add(gameAdded);
+    notifyListeners();
+  }
+
+  void updateGame(Game game) async {
+    await GameService.updateGame(game);
+    games.removeWhere((g) => g.id == game.id);
+    games.add(game);
+    gameDetailed = game;
     notifyListeners();
   }
 

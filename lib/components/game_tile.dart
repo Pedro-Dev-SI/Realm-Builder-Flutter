@@ -14,7 +14,19 @@ class GameTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final image = game.image.isEmpty
       ? const CircleAvatar(radius: 30, child: Icon(Icons.person))
-      : CircleAvatar(radius: 30, backgroundImage: NetworkImage(game.image));
+      : CircleAvatar(
+        radius: 30, 
+        backgroundImage: NetworkImage(game.image),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: const Color(0xFF23A255),
+              width: 2.0
+            )
+          ),
+        )
+      );
     
     return Container(
       margin: const EdgeInsets.only(top: 20, left: 15, right: 10),
