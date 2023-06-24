@@ -40,6 +40,26 @@ class GameService {
     return addedGame;
   }
 
+  static Future<Game> updateGame(Game game) async {
+    Map data = {
+      "id": game.id,
+      "title": game.title,
+      "subtitle": game.subtitle,
+      "description": game.description,
+      "image": game.image,
+    };
+    var body = json.encode(data);
+    var url = Uri.parse(baseGameURL);
+    http.Response response = await http.put(
+      url,
+      headers: headers,
+      body: body
+    );
+    Map responseMap = jsonDecode(utf8.decode(response.bodyBytes));
+    Game updatedGame = Game.fromMap(responseMap);
+    return updatedGame;
+  }
+
   static Future<Game> listById(int id) async {
     try {
       final response = await http.get(Uri.parse("$baseGameURL/$id"));

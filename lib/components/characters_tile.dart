@@ -1,22 +1,23 @@
-import 'package:client_realm_builder/models/game.dart';
-import 'package:client_realm_builder/provider/games_provider.dart';
+import 'package:client_realm_builder/provider/characters_provider.dart';
 import 'package:flutter/material.dart';
 
+import '../models/character.dart';
 import '../routes/app_routes.dart';
 
-class GameTile extends StatelessWidget {
-  final Game game;
-  final GamesProvider gamesProvider;
+class CharacterTile extends StatelessWidget {
+  final Character character;
+  final int gameId;
+  final CharactersProvider charactersProvider;
 
-  const GameTile({Key? key, required this.game, required this.gamesProvider}) : super(key: key);
+  const CharacterTile({Key? key, required this.character, required this.charactersProvider, required this.gameId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final image = game.image.isEmpty
+    final image = character.image.isEmpty
       ? const CircleAvatar(radius: 30, child: Icon(Icons.person))
       : CircleAvatar(
         radius: 30, 
-        backgroundImage: NetworkImage(game.image),
+        backgroundImage: NetworkImage(character.image),
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -34,17 +35,17 @@ class GameTile extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(
-            AppRoutes.GAME_DETAILS,
-            arguments: game.id
+            AppRoutes.CHARACTER_DETAILS,
+            arguments: [character.id, gameId]
           );
         },
         child: Card(
-          color: const Color(0xFF8C5651),
+          color: const Color(0xFFD9D9D9),
           child: Center(
             child: ListTile(
               leading: image,
-              title: Text(game.title, style: const TextStyle(color: Color(0xFFFFFFFF), fontFamily: 'VT323', fontSize: 28),),
-              subtitle: Text(game.subtitle, style: const TextStyle(color: Color(0xFF000000), fontFamily: 'VT323', fontSize: 18, fontWeight: FontWeight.bold)),
+              title: Text('${character.firstName} ${character.secondName}', style: const TextStyle(color: Color(0xFF000000), fontFamily: 'VT323', fontSize: 28),),
+              subtitle: Text(character.race, style: const TextStyle(color: Color(0xFF312D2D), fontFamily: 'VT323', fontSize: 18, fontWeight: FontWeight.bold)),
               // Adicione outros widgets para exibir mais informações do jogo
             ),
           ),
