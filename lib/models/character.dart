@@ -1,3 +1,5 @@
+import 'game.dart';
+
 class Character {
   final int? id;
   final String firstName;
@@ -6,6 +8,7 @@ class Character {
   final String classification;
   final String description;
   final String image;
+  final Game? game;
 
   Character({
     this.id,
@@ -15,6 +18,7 @@ class Character {
     required this.classification,
     required this.description,
     required this.image,
+    this.game
   });
 
   factory Character.fromMap(Map gameMap) {
@@ -26,6 +30,7 @@ class Character {
       classification: gameMap['classification'],
       description: gameMap['description'],
       image: gameMap['image'],
+      game: gameMap['game'] != null ? Game.fromMap(gameMap['game']) : null
     );
   }
 }

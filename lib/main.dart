@@ -1,3 +1,5 @@
+import 'package:client_realm_builder/Screens/add_character_screen.dart';
+import 'package:client_realm_builder/Screens/character_details_screen.dart';
 import 'package:client_realm_builder/Screens/game_details_screen.dart';
 import 'package:client_realm_builder/Screens/new_game.dart';
 import 'package:client_realm_builder/Screens/home_screen.dart';
@@ -6,6 +8,7 @@ import 'package:client_realm_builder/provider/games_provider.dart';
 import 'package:client_realm_builder/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +38,21 @@ class MyApp extends StatelessWidget {
           AppRoutes.GAME_DETAILS: (context) {
             final gameId = ModalRoute.of(context)!.settings.arguments as int;
             return GameDetails(gameId: gameId);
+          },
+          AppRoutes.ADD_CHARACTER: (context) {
+            final gameId = ModalRoute.of(context)!.settings.arguments as int;
+            return AddCharacterScreen(gameId: gameId);
+          },
+          // AppRoutes.CHARACTER_DETAILS: (context) {
+          //   final characterId = ModalRoute.of(context)!.settings.arguments as int;
+          //   final gameId = ModalRoute.of(context)!.settings.arguments as int;
+          //   return CharacterDetails(characterId: characterId, gameId: gameId);
+          // },
+          AppRoutes.CHARACTER_DETAILS: (context) {
+            final args = ModalRoute.of(context)!.settings.arguments as List;
+            final characterId = args[0] as int;
+            final gameId = args[1] as int;
+            return CharacterDetails(characterId: characterId, gameId: gameId);
           },
         },
       )

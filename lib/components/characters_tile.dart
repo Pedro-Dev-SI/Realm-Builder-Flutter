@@ -6,9 +6,10 @@ import '../routes/app_routes.dart';
 
 class CharacterTile extends StatelessWidget {
   final Character character;
+  final int gameId;
   final CharactersProvider charactersProvider;
 
-  const CharacterTile({Key? key, required this.character, required this.charactersProvider}) : super(key: key);
+  const CharacterTile({Key? key, required this.character, required this.charactersProvider, required this.gameId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +34,10 @@ class CharacterTile extends StatelessWidget {
       height: 95,
       child: GestureDetector(
         onTap: () {
-          // Navigator.of(context).pushNamed(
-          //   AppRoutes.GAME_DETAILS,
-          //   arguments: game.id
-          // );
+          Navigator.of(context).pushNamed(
+            AppRoutes.CHARACTER_DETAILS,
+            arguments: [character.id, gameId]
+          );
         },
         child: Card(
           color: const Color(0xFFD9D9D9),

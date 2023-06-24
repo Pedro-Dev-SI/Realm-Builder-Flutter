@@ -19,17 +19,17 @@ class CharacterService {
     }
   }
 
-  static Future<Character> addCharacter(Character character) async {
+  static Future<Character> addCharacter(Character character, int gameId) async {
     Map data = {
       "firstName": character.firstName,
       "secondName": character.secondName,
       "race": character.race,
-      "classication": character.classification,
+      "classification": character.classification,
       "description": character.description,
       "image": character.image,
     };
     var body = json.encode(data);
-    var url = Uri.parse('$baseCharacterURL/create');
+    var url = Uri.parse('$baseCharacterURL/create/$gameId');
     http.Response response = await http.post(
       url,
       headers: headers,
@@ -40,17 +40,18 @@ class CharacterService {
     return addedGame;
   }
 
-  static Future<Character> updateCharacter(Character character) async {
+  static Future<Character> updateCharacter(Character character, int gameId) async {
     Map data = {
+      "id": character.id,
       "firstName": character.firstName,
       "secondName": character.secondName,
       "race": character.race,
-      "classication": character.classification,
+      "classification": character.classification,
       "description": character.description,
       "image": character.image,
     };
     var body = json.encode(data);
-    var url = Uri.parse(baseCharacterURL);
+    var url = Uri.parse('$baseCharacterURL/$gameId');
     http.Response response = await http.put(
       url,
       headers: headers,

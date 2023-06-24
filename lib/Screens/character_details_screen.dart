@@ -13,55 +13,52 @@ import '../models/character.dart';
 import '../routes/app_routes.dart';
 
 
-class GameDetails extends StatefulWidget {
+class CharacterDetails extends StatefulWidget {
 
+  final int characterId;
   final int gameId;
 
-  const GameDetails({Key? key, required this.gameId}) : super(key: key);
+  const CharacterDetails({Key? key, required this.characterId, required this.gameId}) : super(key: key);
 
   @override
-  State<GameDetails> createState() => _GameDetailsState();
+  State<CharacterDetails> createState() => _CharacterDetailsState();
 }
 
-class _GameDetailsState extends State<GameDetails> {
+class _CharacterDetailsState extends State<CharacterDetails> {
 
   final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
-  final _subtitleController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _secondNameController = TextEditingController();
+  final _raceController = TextEditingController();
+  final _classificationController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _imageController = TextEditingController();
 
-  List<Character>? characters;
-  Game? game;
-
-  getGame() async {
-    game = await GameService.listById(widget.gameId);
-    Provider.of<GamesProvider>(context, listen: false).gameDetailed = game;
-    setState(() {});
-  }
+  Character? character;
 
   getCharacter() async {
-    characters = await CharacterService.listCharactersByGameId(widget.gameId);
-    Provider.of<CharactersProvider>(context, listen: false).characters = characters!;
+    character = await CharacterService.listById(widget.characterId);
+    Provider.of<CharactersProvider>(context, listen: false).characterDetailed = character!;
     setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    getGame();
     getCharacter();
   }
 
   void _showGameModal(BuildContext context) {
 
-    final gamesProvider = Provider.of<GamesProvider>(context, listen: false);
-    final gameDetailed = gamesProvider.gameDetailed;
+    final charactersProvider = Provider.of<CharactersProvider>(context, listen: false);
+    final characterDetailed = charactersProvider.characterDetailed;
 
-    _titleController.text = gameDetailed.title ?? '';
-    _subtitleController.text = gameDetailed.subtitle ?? '';
-    _descriptionController.text = gameDetailed.description ?? '';
-    _imageController.text = gameDetailed.image ?? '';
+    _firstNameController.text = characterDetailed.firstName ?? '';
+    _secondNameController.text = characterDetailed.secondName ?? '';
+    _raceController.text = characterDetailed.race ?? '';
+    _classificationController.text = characterDetailed.classification ?? '';
+    _descriptionController.text = characterDetailed.description ?? '';
+    _imageController.text = characterDetailed.image ?? '';
 
     showModalBottomSheet(
       context: context,
@@ -74,7 +71,7 @@ class _GameDetailsState extends State<GameDetails> {
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.85,
             child: Form(
               key: _formKey,
               child: Column(
@@ -92,9 +89,9 @@ class _GameDetailsState extends State<GameDetails> {
                   const SizedBox(height: 20),
                   TextFormField(
                     style: const TextStyle(color: Colors.white),
-                    controller: _titleController,
+                    controller: _firstNameController,
                     decoration: const InputDecoration(
-                      labelText: 'Title',
+                      labelText: 'First Name',
                       labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
@@ -118,9 +115,61 @@ class _GameDetailsState extends State<GameDetails> {
                   const SizedBox(height: 10),
                   TextFormField(
                     style: const TextStyle(color: Colors.white),
-                    controller: _subtitleController,
+                    controller: _secondNameController,
                     decoration: const InputDecoration(
-                      labelText: 'Subtitle',
+                      labelText: 'Second Name',
+                      labelStyle: TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'This field is required';
+                      }
+
+                      if (value.trim().length < 3) {
+                        return 'This field must have at least 3 characters';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    controller: _raceController,
+                    decoration: const InputDecoration(
+                      labelText: 'Race',
+                      labelStyle: TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'This field is required';
+                      }
+
+                      if (value.trim().length < 3) {
+                        return 'This field must have at least 3 characters';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    style: const TextStyle(color: Colors.white),
+                    controller: _classificationController,
+                    decoration: const InputDecoration(
+                      labelText: 'Class Type',
                       labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
@@ -196,8 +245,8 @@ class _GameDetailsState extends State<GameDetails> {
                   const SizedBox(height: 10),
                   TextButton(
                     onPressed: () {
-                      Provider.of<GamesProvider>(context, listen: false).deleteGame(widget.gameId);
-                      Navigator.of(context).popUntil((route) => route.isFirst);
+                      Provider.of<CharactersProvider>(context, listen: false).deleteCharacter(widget.characterId);
+                      Navigator.of(context).popUntil((route) => route.settings.name == AppRoutes.GAME_DETAILS);
                     },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
@@ -206,7 +255,7 @@ class _GameDetailsState extends State<GameDetails> {
                     child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Delete game',
+                        'Delete character',
                         style: TextStyle(
                           color: Color(0xFFF52222),
                           fontFamily: 'VT323',
@@ -245,16 +294,20 @@ class _GameDetailsState extends State<GameDetails> {
                             final isValid = _formKey.currentState!.validate();
                             if (isValid) {
                               _formKey.currentState?.save();
-                              Provider.of<GamesProvider>(context, listen: false).updateGame(
-                                Game(
-                                  id: widget.gameId,
-                                  title: _titleController.text,
-                                  subtitle: _subtitleController.text,
-                                  description: _descriptionController.text,
+                              Provider.of<CharactersProvider>(context, listen: false).updateCharacter(
+                                Character(
+                                  id: widget.characterId,
+                                  firstName: _firstNameController.text, 
+                                  secondName: _secondNameController.text, 
+                                  race: _raceController.text, 
+                                  classification: _classificationController.text, 
+                                  description: _descriptionController.text, 
                                   image: _imageController.text,
+                                  game: characterDetailed.game
                                 ),
+                                widget.gameId
                               );
-                              Navigator.of(context).pop();
+                              Navigator.of(context).popUntil((route) => route.settings.name == AppRoutes.GAME_DETAILS);
                             }
                           },
                           style: TextButton.styleFrom(
@@ -287,35 +340,75 @@ class _GameDetailsState extends State<GameDetails> {
   @override
   Widget build(BuildContext context) {
 
-    final gamesProvider = Provider.of<GamesProvider>(context);
-    final gameDetailed = gamesProvider.gameDetailed;
+    final charactersProvider = Provider.of<CharactersProvider>(context, listen: false);
+    final characterDetailed = charactersProvider.characterDetailed;
 
-    final charactersProvider = Provider.of<CharactersProvider>(context);
+    _firstNameController.text = characterDetailed.firstName ?? '';
+    _secondNameController.text = characterDetailed.secondName ?? '';
+    _raceController.text = characterDetailed.race ?? '';
+    _classificationController.text = characterDetailed.classification ?? '';
+    _descriptionController.text = characterDetailed.description ?? '';
+    _imageController.text = characterDetailed.image ?? '';
 
-    _titleController.text = gameDetailed.title ?? '';
-    _subtitleController.text = gameDetailed.subtitle ?? '';
-    _descriptionController.text = gameDetailed.description ?? '';
-    _imageController.text = gameDetailed.image ?? '';
+    final image = character!.image.isEmpty
+      ? const CircleAvatar(radius: 30, child: Icon(Icons.person))
+      : CircleAvatar(
+        radius: 30, 
+        backgroundImage: NetworkImage(character!.image),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: const Color(0xFF23A255),
+              width: 2.0
+            )
+          ),
+        )
+      );
 
     return Scaffold(
       backgroundColor: const Color(0xFF363636),
       appBar: const CustomAppBar(),
       body: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.only(left: 15, top: 20),
-            alignment: Alignment.centerLeft,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                _titleController.text,
-                style: const TextStyle(
-                  color: Color(0xFFFFFFFF),
-                  fontFamily: 'VT323',
-                  fontSize: 30,
-                ),
+          Row(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 15, top: 20),
+                child: image,
+              ),
+              Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 15, top: 20),
+                    alignment: Alignment.centerLeft,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        '${_firstNameController.text} ${_secondNameController.text}',
+                        style: const TextStyle(
+                          color: Color(0xFFFFFFFF),
+                          fontFamily: 'VT323',
+                          fontSize: 30,
+                        ),
+                      )
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 5, right: 35),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      characterDetailed.race ?? '',
+                      style: const TextStyle(
+                        color: Color(0xFF23A255),
+                        fontFamily: 'VT323',
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ]
               )
-            ),
+            ],
           ),
           Container(
             margin: const EdgeInsets.only(left: 15, top: 15),
@@ -333,11 +426,11 @@ class _GameDetailsState extends State<GameDetails> {
               child: const Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Game configurations',
+                  'Edit Character',
                   style: TextStyle(
                     color: Colors.white, // Define a cor do texto como branco
                     fontFamily: 'VT323',
-                    fontSize: 20,
+                    fontSize: 22,
                   ),
                 )
               ),
@@ -365,7 +458,7 @@ class _GameDetailsState extends State<GameDetails> {
                     ),
                   ),
                   child: const Text(
-                    'Game Description',
+                    'Character Description',
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'VT323',
@@ -379,7 +472,7 @@ class _GameDetailsState extends State<GameDetails> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      gameDetailed.description ?? '',
+                      characterDetailed.description ?? '',
                       style: const TextStyle(
                         color: Colors.white,
                         fontFamily: 'VT323',
@@ -390,60 +483,6 @@ class _GameDetailsState extends State<GameDetails> {
                   ),
                 ),
               ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 5, right: 5, top: 20),
-            child: SizedBox(
-              height: 400,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Text(
-                          'Characters',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'VT323',
-                            fontSize: 30,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 70),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                            AppRoutes.ADD_CHARACTER,
-                            arguments: game?.id
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: const Color(0xFF61A573),
-                        ),
-                        icon: const Icon(Icons.add),
-                        label: const Text('Add character', style: TextStyle(color: Color(0xFFFFFFFF), fontFamily: 'VT323', fontSize: 20),),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Expanded(
-                    child: Consumer<CharactersProvider>(
-                      builder: (context, charactersProvider, child) {
-                        return ListView.builder(
-                          itemCount: charactersProvider.characters.length,
-                          itemBuilder: (ctx, i) {
-                            Character character = charactersProvider.characters[i];
-                            return CharacterTile(character: character, gameId: widget.gameId, charactersProvider: charactersProvider);
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
             ),
           )
         ],

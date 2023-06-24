@@ -4,24 +4,23 @@ import '../models/character.dart';
 
 class CharactersProvider with ChangeNotifier {
   List<Character> characters = [];
-
   dynamic characterDetailed;
 
-  void addCharacter(Character character) async {
-    Character characterAdded  = await CharacterService.addCharacter(character);
+  void addCharacter(Character character, int gameId) async {
+    Character characterAdded  = await CharacterService.addCharacter(character, gameId);
     characters.add(characterAdded);
     notifyListeners();
   }
 
-  void updateCharacter(Character character) async {
-    await CharacterService.updateCharacter(character);
-    characters.removeWhere((g) => g.id == character.id);
+  void updateCharacter(Character character, int gameId) async {
+    await CharacterService.updateCharacter(character, gameId);
+    characters.removeWhere((c) => c.id == character.id);
     characters.add(character);
     characterDetailed = character;
     notifyListeners();
   }
 
-  void deleteGame(int characterId) async {
+  void deleteCharacter(int characterId) async {
     characters.removeWhere((g) => g.id == characterId);
     await CharacterService.deleteCharacter(characterId);
     notifyListeners();
