@@ -3,14 +3,14 @@ class Game {
   final String title;
   final String subtitle;
   final String description;
-  final String image;
+  final String imageUrl;
 
   Game({
     this.id,
     required this.title,
     required this.subtitle,
     required this.description,
-    required this.image,
+    required this.imageUrl,
   });
 
   factory Game.fromMap(Map gameMap) {
@@ -19,7 +19,7 @@ class Game {
       title: gameMap['title'],
       subtitle: gameMap['subtitle'],
       description: gameMap['description'],
-      image: gameMap['image'],
+      imageUrl: gameMap['imageUrl'],
     );
   }
 }

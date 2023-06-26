@@ -145,7 +145,7 @@ class _AddCharacterState extends State<AddCharacterScreen> {
 
                   return null;
                 },
-                onSaved: (value) => _formData['classification'] = value!,
+                onSaved: (value) => _formData['classType'] = value!,
               ),
               const SizedBox(height: 10),
               TextFormField(
@@ -187,7 +187,7 @@ class _AddCharacterState extends State<AddCharacterScreen> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                 ),
-                onSaved: (value) => _formData['image'] = value!,
+                onSaved: (value) => _formData['imageUrl'] = value!,
               ),
               const Spacer(),
               ElevatedButton(
@@ -200,9 +200,9 @@ class _AddCharacterState extends State<AddCharacterScreen> {
                         firstName: _formData['firstName']!, 
                         secondName: _formData['secondName']!, 
                         race: _formData['race']!, 
-                        classification: _formData['classification']!, 
+                        classType: _formData['classType']!, 
                         description: _formData['description']!, 
-                        image: _formData['image']!
+                        imageUrl: _formData['imageUrl']!
                       ),
                       widget.gameId
                     );

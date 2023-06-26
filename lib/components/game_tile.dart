@@ -12,11 +12,11 @@ class GameTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = game.image.isEmpty
+    final image = game.imageUrl.isEmpty
       ? const CircleAvatar(radius: 30, child: Icon(Icons.person))
       : CircleAvatar(
         radius: 30, 
-        backgroundImage: NetworkImage(game.image),
+        backgroundImage: NetworkImage(game.imageUrl),
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,

@@ -13,11 +13,11 @@ class CharacterTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = character.image.isEmpty
+    final image = character.imageUrl.isEmpty
       ? const CircleAvatar(radius: 30, child: Icon(Icons.person))
       : CircleAvatar(
         radius: 30, 
-        backgroundImage: NetworkImage(character.image),
+        backgroundImage: NetworkImage(character.imageUrl),
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,

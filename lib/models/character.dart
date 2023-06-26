@@ -5,9 +5,9 @@ class Character {
   final String firstName;
   final String secondName;
   final String race;
-  final String classification;
+  final String classType;
   final String description;
-  final String image;
+  final String imageUrl;
   final Game? game;
 
   Character({
@@ -15,9 +15,9 @@ class Character {
     required this.firstName,
     required this.secondName,
     required this.race,
-    required this.classification,
+    required this.classType,
     required this.description,
-    required this.image,
+    required this.imageUrl,
     this.game
   });
 
@@ -27,9 +27,9 @@ class Character {
       firstName: gameMap['firstName'],
       secondName: gameMap['secondName'],
       race: gameMap['race'],
-      classification: gameMap['classification'],
+      classType: gameMap['classType'],
       description: gameMap['description'],
-      image: gameMap['image'],
+      imageUrl: gameMap['imageUrl'],
       game: gameMap['game'] != null ? Game.fromMap(gameMap['game']) : null
     );
   }
