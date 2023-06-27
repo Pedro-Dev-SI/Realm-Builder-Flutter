@@ -69,7 +69,7 @@ class _NewGameState extends State<NewGame> {
               TextFormField(
                 style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
-                  labelText: 'subtitle',
+                  labelText: 'Subtitle',
                   labelStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
@@ -131,7 +131,7 @@ class _NewGameState extends State<NewGame> {
                     borderSide: BorderSide(color: Colors.white),
                   ),
                 ),
-                onSaved: (value) => _formData['image'] = value!,
+                onSaved: (value) => _formData['imageUrl'] = value!,
               ),
               const Spacer(),
               ElevatedButton(
@@ -144,7 +144,7 @@ class _NewGameState extends State<NewGame> {
                         title: _formData['title']!,
                         subtitle: _formData['subtitle']!,
                         description: _formData['description']!,
-                        image: _formData['image']!,
+                        imageUrl: _formData['imageUrl']!,
                       ),
                     );
                     Navigator.of(context).pop();

@@ -24,9 +24,9 @@ class CharacterService {
       "firstName": character.firstName,
       "secondName": character.secondName,
       "race": character.race,
-      "classification": character.classification,
+      "classType": character.classType,
       "description": character.description,
-      "image": character.image,
+      "imageUrl": character.imageUrl,
     };
     var body = json.encode(data);
     var url = Uri.parse('$baseCharacterURL/create/$gameId');
@@ -46,9 +46,9 @@ class CharacterService {
       "firstName": character.firstName,
       "secondName": character.secondName,
       "race": character.race,
-      "classification": character.classification,
+      "classType": character.classType,
       "description": character.description,
-      "image": character.image,
+      "imageUrl": character.imageUrl,
     };
     var body = json.encode(data);
     var url = Uri.parse('$baseCharacterURL/$gameId');

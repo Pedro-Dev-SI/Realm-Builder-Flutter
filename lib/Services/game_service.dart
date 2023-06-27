@@ -26,7 +26,7 @@ class GameService {
       "title": game.title,
       "subtitle": game.subtitle,
       "description": game.description,
-      "image": game.image,
+      "imageUrl": game.imageUrl,
     };
     var body = json.encode(data);
     var url = Uri.parse('$baseGameURL/create');
@@ -46,7 +46,7 @@ class GameService {
       "title": game.title,
       "subtitle": game.subtitle,
       "description": game.description,
-      "image": game.image,
+      "imageUrl": game.imageUrl,
     };
     var body = json.encode(data);
     var url = Uri.parse(baseGameURL);

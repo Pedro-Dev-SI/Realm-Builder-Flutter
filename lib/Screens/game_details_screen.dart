@@ -61,7 +61,7 @@ class _GameDetailsState extends State<GameDetails> {
     _titleController.text = gameDetailed.title ?? '';
     _subtitleController.text = gameDetailed.subtitle ?? '';
     _descriptionController.text = gameDetailed.description ?? '';
-    _imageController.text = gameDetailed.image ?? '';
+    _imageController.text = gameDetailed.imageUrl ?? '';
 
     showModalBottomSheet(
       context: context,
@@ -251,7 +251,7 @@ class _GameDetailsState extends State<GameDetails> {
                                   title: _titleController.text,
                                   subtitle: _subtitleController.text,
                                   description: _descriptionController.text,
-                                  image: _imageController.text,
+                                  imageUrl: _imageController.text,
                                 ),
                               );
                               Navigator.of(context).pop();
@@ -295,7 +295,7 @@ class _GameDetailsState extends State<GameDetails> {
     _titleController.text = gameDetailed.title ?? '';
     _subtitleController.text = gameDetailed.subtitle ?? '';
     _descriptionController.text = gameDetailed.description ?? '';
-    _imageController.text = gameDetailed.image ?? '';
+    _imageController.text = gameDetailed.imageUrl ?? '';
 
     return Scaffold(
       backgroundColor: const Color(0xFF363636),

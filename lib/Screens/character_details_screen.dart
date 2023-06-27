@@ -30,7 +30,7 @@ class _CharacterDetailsState extends State<CharacterDetails> {
   final _firstNameController = TextEditingController();
   final _secondNameController = TextEditingController();
   final _raceController = TextEditingController();
-  final _classificationController = TextEditingController();
+  final _classTypeController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _imageController = TextEditingController();
 
@@ -56,9 +56,9 @@ class _CharacterDetailsState extends State<CharacterDetails> {
     _firstNameController.text = characterDetailed.firstName ?? '';
     _secondNameController.text = characterDetailed.secondName ?? '';
     _raceController.text = characterDetailed.race ?? '';
-    _classificationController.text = characterDetailed.classification ?? '';
+    _classTypeController.text = characterDetailed.classType ?? '';
     _descriptionController.text = characterDetailed.description ?? '';
-    _imageController.text = characterDetailed.image ?? '';
+    _imageController.text = characterDetailed.imageUrl ?? '';
 
     showModalBottomSheet(
       context: context,
@@ -167,7 +167,7 @@ class _CharacterDetailsState extends State<CharacterDetails> {
                   const SizedBox(height: 10),
                   TextFormField(
                     style: const TextStyle(color: Colors.white),
-                    controller: _classificationController,
+                    controller: _classTypeController,
                     decoration: const InputDecoration(
                       labelText: 'Class Type',
                       labelStyle: TextStyle(color: Colors.white),
@@ -300,9 +300,9 @@ class _CharacterDetailsState extends State<CharacterDetails> {
                                   firstName: _firstNameController.text, 
                                   secondName: _secondNameController.text, 
                                   race: _raceController.text, 
-                                  classification: _classificationController.text, 
+                                  classType: _classTypeController.text, 
                                   description: _descriptionController.text, 
-                                  image: _imageController.text,
+                                  imageUrl: _imageController.text,
                                   game: characterDetailed.game
                                 ),
                                 widget.gameId
@@ -346,15 +346,15 @@ class _CharacterDetailsState extends State<CharacterDetails> {
     _firstNameController.text = characterDetailed.firstName ?? '';
     _secondNameController.text = characterDetailed.secondName ?? '';
     _raceController.text = characterDetailed.race ?? '';
-    _classificationController.text = characterDetailed.classification ?? '';
+    _classTypeController.text = characterDetailed.classType ?? '';
     _descriptionController.text = characterDetailed.description ?? '';
-    _imageController.text = characterDetailed.image ?? '';
+    _imageController.text = characterDetailed.imageUrl ?? '';
 
-    final image = character!.image.isEmpty
+    final image = character!.imageUrl.isEmpty
       ? const CircleAvatar(radius: 30, child: Icon(Icons.person))
       : CircleAvatar(
         radius: 30, 
-        backgroundImage: NetworkImage(character!.image),
+        backgroundImage: NetworkImage(character!.imageUrl),
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
